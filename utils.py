@@ -2,8 +2,9 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 def plot_acc(data):
-    plt.figure()
+    fig = plt.figure()
     plt.suptitle("Accelerometer")
+    fig.tight_layout()
     # X
     plt.subplot(3,1,1)
     plt.plot(data[0], data[1])
@@ -26,8 +27,9 @@ def plot_acc(data):
     plt.close()
 
 def plot_gyro(data):
-    plt.figure()
+    fig = plt.figure()
     plt.suptitle("Gyroscope")
+    fig.tight_layout()
     # X
     plt.subplot(3,1,1)
     plt.plot(data[0], data[1])
