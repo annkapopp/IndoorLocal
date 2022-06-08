@@ -81,3 +81,15 @@ def weighted_moving_average(vol, dim=2, wl=16, sigma=4):
     gauss_weights = gaussian_filter1d(dirac, sigma=sigma)
     vol = convolve1d(vol, gauss_weights, axis=dim, mode='reflect', origin=0)
     return vol
+
+#gets the base shift matrix for a particular g_b
+def get_matrix(g_b):
+    u_z = g_b
+    u_x = np.cross(np.array([0,1,0]).T, u_z)
+    u_y = np.cross(u_z, u_x)
+
+    R = np.array([u_x/np.linalg.norm(u_x),
+                u_y/np.linalg.norm(u_y),
+                u_z/np.linalg.norm(u_z)])
+    
+    return R
