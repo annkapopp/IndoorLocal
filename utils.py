@@ -93,3 +93,11 @@ def get_matrix(g_b):
                 u_z/np.linalg.norm(u_z)])
     
     return R
+
+#gets the current gb using a recursive moving average 
+def get_gb(accel, t, sigma, g_b0):
+    if t == 0:
+        return g_b0
+    else:
+        g_b = sigma * get_gb(accel, t-1, sigma, g_b0) + (1-sigma) * accel[t]
+        return g_b
