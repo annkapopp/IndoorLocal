@@ -94,10 +94,7 @@ def get_matrix(g_b):
     
     return R
 
-#gets the current gb using a recursive moving average 
-def get_gb(accel, t, sigma, g_b0):
-    if t == 0:
-        return g_b0
-    else:
-        g_b = sigma * get_gb(accel, t-1, sigma, g_b0) + (1-sigma) * accel[t]
-        return g_b
+#gets the current gb using the previous one
+def get_gb(accel, t, sigma, prev_g):
+    g_b = sigma * prev_g + (1-sigma) * accel[1:,t]
+    return g_b
