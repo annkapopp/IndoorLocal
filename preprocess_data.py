@@ -11,15 +11,15 @@ def preprocess_data(acc_filename, gyro_filename):
     # dataframe to numpy array
     acc = np.asarray([
         acc_df['Time (s)'].to_numpy(dtype=float),
-        acc_df['X (m/s^2)'].to_numpy(dtype=float), 
-        acc_df['Y (m/s^2)'].to_numpy(dtype=float), 
-        acc_df['Z (m/s^2)'].to_numpy(dtype=float)
+        acc_df["Acceleration x (m/s^2)"].to_numpy(dtype=float), 
+        acc_df["Acceleration y (m/s^2)"].to_numpy(dtype=float), 
+        acc_df["Acceleration z (m/s^2)"].to_numpy(dtype=float)
     ])
     gyro = np.asarray([
         gyro_df['Time (s)'].to_numpy(dtype=float),
-        gyro_df['X (rad/s)'].to_numpy(dtype=float), 
-        gyro_df['Y (rad/s)'].to_numpy(dtype=float), 
-        gyro_df['Z (rad/s)'].to_numpy(dtype=float)
+        gyro_df["Gyroscope x (rad/s)"].to_numpy(dtype=float), 
+        gyro_df["Gyroscope y (rad/s)"].to_numpy(dtype=float), 
+        gyro_df["Gyroscope z (rad/s)"].to_numpy(dtype=float)
     ])
 
     acc_norm = np.linalg.norm(acc[1::], axis=0)
