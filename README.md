@@ -11,7 +11,9 @@ We used two different devices for recording by using the app *phyphox*.
 - iPhone XR (Building 64): 
   - Accelerometer rate: 100.0 Hz
   - Gyroscope rate: 100.0 Hz 
-- (Karlebach Park)
+- Sony XPeria 1(Karlebach Park):
+  - Accelerometer rate: 412.0 Hz
+  - Gyroscope rate: 412.0 Hz  
 
 ## Preprocessing
 Before using the data for steps detection and estimation, it had to be preprocessed for noice removing and for bringing it into the right format. This is further explained and shown in `preprocessing.ipynb`.
@@ -26,5 +28,5 @@ The step estimation is entirely based on the outline given in the project. More 
 
 The plots can be found in the respective notebooks. For a rough outline, the step estimation on the data of building 64 worked very well. A full trajectory was almost able to be estimated.
 
-For the Karlebachpark the estimation did not work very well. Whether this is due to the higher frequency of the recording, irregularities in the recording device, the software, errors in the code or other factors was not able to be determined.
+For the Karlebachpark the estimation did not work very well. Whether this is due to the higher frequency of the recording, irregularities in the recording device, the software, errors in the code or other factors was not able to be determined. It might also be due to large differences in resolution between the gyro and accelerometer sensors.
 
