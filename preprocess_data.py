@@ -4,23 +4,39 @@ import os
 import utils
 
 def preprocess_data(acc_filename, gyro_filename):
+    filename = os.path.basename(os.path.dirname(acc_filename))
+
     # load data as dataframe
     acc_df = pd.read_csv(acc_filename, sep=',',header=0)
     gyro_df = pd.read_csv(gyro_filename, sep=',',header=0)
-
+    
     # dataframe to numpy array
-    acc = np.asarray([
-        acc_df['Time (s)'].to_numpy(dtype=float),
-        acc_df["Acceleration x (m/s^2)"].to_numpy(dtype=float), 
-        acc_df["Acceleration y (m/s^2)"].to_numpy(dtype=float), 
-        acc_df["Acceleration z (m/s^2)"].to_numpy(dtype=float)
-    ])
-    gyro = np.asarray([
-        gyro_df['Time (s)'].to_numpy(dtype=float),
-        gyro_df["Gyroscope x (rad/s)"].to_numpy(dtype=float), 
-        gyro_df["Gyroscope y (rad/s)"].to_numpy(dtype=float), 
-        gyro_df["Gyroscope z (rad/s)"].to_numpy(dtype=float)
-    ])
+    if filename == "karlebach":
+        acc = np.asarray([
+            acc_df['Time (s)'].to_numpy(dtype=float),
+            acc_df['Acceleration x (m/s^2)'].to_numpy(dtype=float), 
+            acc_df['Acceleration y (m/s^2)'].to_numpy(dtype=float), 
+            acc_df['Acceleration z (m/s^2)'].to_numpy(dtype=float)
+        ])
+        gyro = np.asarray([
+            gyro_df['Time (s)'].to_numpy(dtype=float),
+            gyro_df['Gyroscope x (rad/s)'].to_numpy(dtype=float), 
+            gyro_df['Gyroscope y (rad/s)'].to_numpy(dtype=float), 
+            gyro_df['Gyroscope z (rad/s)'].to_numpy(dtype=float)
+        ])
+    else:
+        acc = np.asarray([
+            acc_df['Time (s)'].to_numpy(dtype=float),
+            acc_df['X (m/s^2)'].to_numpy(dtype=float), 
+            acc_df['Y (m/s^2)'].to_numpy(dtype=float), 
+            acc_df['Z (m/s^2)'].to_numpy(dtype=float)
+        ])
+        gyro = np.asarray([
+            gyro_df['Time (s)'].to_numpy(dtype=float),
+            gyro_df['X (rad/s)'].to_numpy(dtype=float), 
+            gyro_df['Y (rad/s)'].to_numpy(dtype=float), 
+            gyro_df['Z (rad/s)'].to_numpy(dtype=float)
+        ])
 
     acc_norm = np.linalg.norm(acc[1::], axis=0)
     acc_norm = np.array([acc[0], acc_norm])
@@ -32,8 +48,6 @@ def preprocess_data(acc_filename, gyro_filename):
 
     filtered_acc_all = np.concatenate([np.expand_dims(acc[0], 0), utils.weighted_moving_average(acc[1::], dim=1, wl=21)],  axis=0)
     filtered_gyro_all = np.concatenate([np.expand_dims(gyro[0], 0), utils.weighted_moving_average(gyro[1::], dim=1, wl=21)],  axis=0)
-
-    filename = os.path.basename(os.path.dirname(acc_filename))
 
     np.save("preprocessed_data/" + filename + "_acc_norm.npy", filtered_acc_norm)
     np.save("preprocessed_data/" + filename + "_gyro_norm.npy", filtered_gyro_norm)
